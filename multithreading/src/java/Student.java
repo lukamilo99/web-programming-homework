@@ -4,23 +4,27 @@ import java.util.concurrent.BrokenBarrierException;
 public class Student implements Runnable {
 
     private Integer studentId;
-    private Long sleepTime;
+    private Integer score;
+    private Long arrivalTime;
     private Long presentationTime;
     private Examiner examiner;
 
     public Student(Integer studentId) {
         this.studentId = studentId;
-        this.sleepTime = getRandomNumber(0L, 1000L);
+        this.arrivalTime = getRandomNumber(0L, 1000L);
         this.presentationTime = getRandomNumber(500L, 1000L);
         examiner = assignExaminer();
+    }
+
+    public Long getArrivalTime() {
+        return arrivalTime;
     }
 
     @Override
     public void run() {
         try {
-            Thread.sleep(sleepTime);
+            Thread.sleep(arrivalTime);
             examiner.examine(this);
-
         } catch (InterruptedException | BrokenBarrierException e) {
             System.out.println("Examination ended, student interrupted");
         }
@@ -46,5 +50,13 @@ public class Student implements Runnable {
 
     public Integer getStudentId() {
         return studentId;
+    }
+
+    public void setScore(Integer score) {
+        this.score = score;
+    }
+
+    public Integer getScore(){
+        return score;
     }
 }

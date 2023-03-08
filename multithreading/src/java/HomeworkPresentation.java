@@ -21,7 +21,7 @@ public class HomeworkPresentation{
         }
 
         try {
-            Thread.sleep(5000);
+            Thread.sleep(5000); // uzeo sam da je neophodno vreme za pokretanje svih taskova 0 sekundi
             executorService.shutdownNow();
 
             System.out.println("Average score is: " + sumOfStudentsScore.doubleValue() / fullyPresentedHomeworks.doubleValue());
