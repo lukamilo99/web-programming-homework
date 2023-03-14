@@ -23,8 +23,8 @@ public class Database {
         }
 
         Document document = new Document();
-        document.put("client", parts[0]);
-        document.put("content", content.toString());
+        document.put("client", parts[0].substring(0, parts[0].length() - 1));
+        document.put("content", content.toString().trim());
         document.put("time", parts[parts.length - 1]);
 
         mongoDatabase.getCollection("messages").insertOne(document);
@@ -36,10 +36,10 @@ public class Database {
 
         for (Document message: messages){
             stringBuilder.append(message.get("client")).append(": ")
-                    .append(message.get("content")).append(" [")
-                    .append(message.get("time")).append("]\n");
+                    .append(message.get("content")).append(" ")
+                    .append(message.get("time")).append("\n");
         }
 
-        return stringBuilder.toString();
+        return stringBuilder.deleteCharAt(stringBuilder.length() - 1).toString();
     }
 }

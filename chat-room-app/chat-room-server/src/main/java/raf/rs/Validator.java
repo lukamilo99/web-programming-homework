@@ -7,7 +7,7 @@ public class Validator {
     private List<String> forbiddenWordsList;
 
     public Validator() {
-        this.forbiddenWordsList = List.of("IDIOT");
+        this.forbiddenWordsList = List.of("idiot", "fool", "punk");
     }
 
     public String getFormattedMessage(String username, String content){
@@ -15,13 +15,13 @@ public class Validator {
         String[] wordList = content.split(" ");
 
         for(String word: wordList){
-            if(forbiddenWordsList.contains(word)){
+            if(forbiddenWordsList.contains(word.toLowerCase())){
                 content = content.replace(word, getCensoredWord(word));
             }
         }
 
-        return username + " " + content + content + " "
-                + new Date(System.currentTimeMillis()).toString().replace(" ", "-");
+        return username + ": " + content + " ["
+                + new Date(System.currentTimeMillis()).toString().replace(" ", "-") + "]";
     }
 
     private String getCensoredWord(String word){
@@ -31,6 +31,6 @@ public class Validator {
             chars[i] = '*';
         }
 
-        return Arrays.toString(chars);
+        return new String(chars);
     }
 }

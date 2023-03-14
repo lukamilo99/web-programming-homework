@@ -16,8 +16,10 @@ public class Server {
         while (!serverSocket.isClosed()) {
             try {
                 Socket socket = serverSocket.accept();
-                System.out.println("Client connected");
                 Thread connectedClientTread = new Thread(new ConnectedClient(socket));
+
+                System.out.println("Client connected to " + connectedClientTread.getName());
+
                 connectedClientTread.start();
             } catch (IOException e) {
                 close();

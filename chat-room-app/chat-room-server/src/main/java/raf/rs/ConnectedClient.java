@@ -29,15 +29,17 @@ public class ConnectedClient implements Runnable {
             this.output = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()), true);
             this.username = input.readLine();
 
-            if(connectedClients.add(this)) {
-                this.validator = new Validator();
-                this.database = new Database();
-                notifyCurrentClient(loadMessageHistory());
-                notifyClients(username + " has entered the chat room!");
-
-            } else {
-                output.println("Username already in use");
-                close();
+            while(true){
+                if(connectedClients.add(this)) {
+                    this.validator = new Validator();
+                    this.database = new Database();
+                    notifyCurrentClient(loadMessageHistory());
+                    notifyClients(username + " has entered the chat room!");
+                    break;
+                } else {
+                    output.println("Username already in use, enter another one.");
+                    this.username = input.readLine();
+                }
             }
         } catch (IOException e) {
             close();
